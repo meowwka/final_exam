@@ -2,7 +2,7 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith title="Login">
-    <h2>sign-in</h2>
+    <h2 style="text-align: center">sign-in</h2>
     <div>
         <#if error!false>
             <p style="color: red"> invalid-data</p>

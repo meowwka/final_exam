@@ -28,7 +28,7 @@
                             <p class="card-text">${listItem.description}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Rating: </li>
                         </ul>
 
                     </a>

@@ -14,7 +14,7 @@
         <input type="text"  name="name" class="form-control mb-2" placeholder="name" value="${form.name!''}" >
         <input type="text" name="login" class="form-control mb-2" placeholder= "login"  value="${form.login!''}">
         <input type="password" name="password" class="form-control mb-1" placeholder="your-password"  value="">
-        <button type="submit" class="btn btn-outline-info btn-block">registration></button>
+        <button type="submit" class="btn btn-outline-info btn-block">registration</button>
           <a type="submit" href="/login" class="btn btn-outline-info btn-block">sign-in</a>
       </form>
       <div>
