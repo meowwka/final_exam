@@ -31,7 +31,7 @@ public class Place {
     @Size(min = 1, max = 128)
     private String image;
     public Place(String name, String description,String image){
-        this.image=name;
+        this.name=name;
         this.description=description;
         this.image=image;
 

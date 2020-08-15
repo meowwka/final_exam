@@ -22,11 +22,16 @@ import tt.places.rating.service.PlaceService;
 import tt.places.rating.service.PropertiesService;
 import tt.places.rating.service.UserService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
+import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART;
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
+
 
 @Controller
 @RequestMapping
@@ -116,6 +121,34 @@ public class MainController {
         return "addPlace";
     }
 
+
+    @RequestMapping(value = "/add_place", method = RequestMethod.POST,
+            consumes = MULTIPART_FORM_DATA)
+    public String addPost(@RequestParam String title,
+                                @RequestParam String description,
+                                @RequestParam("file") MultipartFile image) throws IOException {
+        File imageFile = new File("src\\main\\resources\\static\\images\\"+ image.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(imageFile);
+//        BufferedImage imagec = ImageIO.read(imageFile);
+//        ImageIO.write();
+//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
+        fos.write(image.getBytes());
+//        fos.write();
+
+
+//        User user = new User("some user", "pass123");
+//        user.setId(user_id);
+//        userRepo.save(user);
+
+        Place p = new Place(title,description,  image.getOriginalFilename());
+        placeRepository.save(p);
+//        objectOutputStream.writeObject(p);
+        fos.close();
+
+        System.out.println("done");
+        return "redirect:/";
+    }
+
     @GetMapping("/files/{name}")
     @ResponseBody
     public ResponseEntity<byte[]> getImage(@PathVariable("name") String name) {
@@ -142,24 +175,5 @@ public class MainController {
             e.printStackTrace();
         }
         return null;
-    }
-    @RequestMapping(value = "/add_place", method = RequestMethod.POST, consumes=MULTIPART_FORM_DATA)
-    public final String addPost(@RequestParam String title,
-                                @RequestParam String description,
-                                @RequestParam("file") MultipartFile image) throws IOException {
-        File imageFile = new File("src/main/resources/static/images"+ image.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(imageFile);
-        fos.write(image.getBytes());
-        fos.close();
-
-//        User user = new User("some user", "pass123");
-//        user.setId(user_id);
-//        userRepo.save(user);
-
-        Place p = new Place(title,description, "src/main/resources/static/images"+ image.getOriginalFilename());
-        placeRepository.save(p);
-
-        System.out.println("done");
-        return "success";
     }
 }

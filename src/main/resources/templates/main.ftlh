@@ -20,7 +20,7 @@
 
 
         <div class="card bg-light border-dark mb-3" style="width: 15rem;">
-                    <img src="/images/${listItem.imagePath}" class="card-img-top food-icon" alt="..." style=" height:21rem">
+                    <img src="/images/${listItem.imagePath}" class="card-img-top food-icon" alt="..." style=" height:21rem;width: 15rem">
                     <a class="text-dark" href="/places/${listItem.id}">
                         <div class="card-body">
                             <h5 class="card-title">${listItem.name}</h5>

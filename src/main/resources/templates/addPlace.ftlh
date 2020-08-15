@@ -1,7 +1,7 @@
 <#import "partials/main.ftlh" as main />
 
 <@main.renderWith title="Main">
-    <form action="/add_place" method="post" >
+    <form action="/add_place" method="post" enctype="multipart/form-data" >
         <#if _csrf??>
             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
         </#if>
