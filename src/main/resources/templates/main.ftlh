@@ -19,7 +19,7 @@
         <div class="col-sm-3">
 
 
-        <div class="card bg-light border-dark mb-3" style="width: 15rem;">
+        <div class="card bg-light border-dark mb-3" style="width: 15rem;height: 42rem">
                     <img src="/images/${listItem.imagePath}" class="card-img-top images-icon" alt="..." style=" height:21rem;width: 15rem">
                     <a class="text-dark" href="/places/${listItem.id}">
                         <div class="card-body">

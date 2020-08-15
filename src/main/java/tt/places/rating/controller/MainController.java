@@ -28,6 +28,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.Principal;
 
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART;
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
@@ -108,6 +109,16 @@ public class MainController {
         }
 //        var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
 //        model.addAttribute("user", user);
+        return "main";
+    }
+
+    @GetMapping("/search/{search}")
+    public String search(@PathVariable("search") String search, Principal principal, Model model, Pageable pageable,HttpServletRequest uriBiulder){
+        var places = placeService.searchPlace(search, pageable);
+        var uri = uriBiulder.getRequestURI();
+        constructPageable(places, propertiesService.getDefaultPageSize(), model, uri);
+        var user = userService.getByEmail(uriBiulder.getUserPrincipal().getName());
+        model.addAttribute("user", user);
         return "main";
     }
 

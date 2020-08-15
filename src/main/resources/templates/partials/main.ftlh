@@ -81,6 +81,7 @@
 
     </div>
 <#--    <script src="js/main.js"></script>-->
+    <script src="js/script.js"></script>
 
     <#list scripts as scriptSource>
         <script src="${scriptSource}"></script>

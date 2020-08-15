@@ -23,4 +23,9 @@ public class PlaceService {
         var place = placeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("place", id));
         return PlaceDTO.from(place);
     }
+
+    public Page<PlaceDTO> searchPlace(String text, Pageable pageable){
+        return placeRepository.findPlaceByName(text, pageable)
+                .map(PlaceDTO::from);
+    }
 }
