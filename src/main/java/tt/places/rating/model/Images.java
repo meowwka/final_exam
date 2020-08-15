@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
-@Table(name = "foods")
+@Table(name = "images")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
@@ -22,20 +22,9 @@ public class Images {
     @NotBlank
     @Size(min = 1, max = 128)
     @Column(length = 128)
-    private String name;
-
-    @NotBlank
-    @Size(min = 1, max = 128)
-    @Column(length = 128)
-    private String image;
-
-//    @ManyToOne
-//    @NotNull
-//    private FoodType foodType;
-
-    @Positive
-    private float price;
+    private String imageName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id",nullable = false)
     private Place place;
 }

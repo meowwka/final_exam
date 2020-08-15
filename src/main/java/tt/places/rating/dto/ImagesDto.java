@@ -20,11 +20,12 @@ public class ImagesDto {
     public static ImagesDto from(Images images) {
         return builder()
                 .id(images.getId())
-                .name(images.getName())
+//                .name(images.getImageName())
 //                .type(FoodTypeDTO.from(food.getFoodType()))
-                .image(images.getImage())
-                .price(images.getPrice())
+                .image(images.getImageName())
+//                .price(images.getPrice())
                 .build();
+
     }
 //
 //    @Getter

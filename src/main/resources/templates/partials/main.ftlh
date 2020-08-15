@@ -36,6 +36,17 @@
                     </#if>
                 </ul>
         </nav>
+            <div class="collapse navbar-collapse justify-content-center">
+                <ul class="nav">
+<#--                    <#if user??>-->
+                        <li class="nav-item mr-2 form-inline">
+                            <input type="search" id="search-input" class="form-control " placeholder="Поиск"/>
+                            <button class="btn btn-outline-light ml-1" id="btn-search" onclick="search()">Поиск</button>
+                        </li>
+<#--                    <#else>-->
+<#--                    </#if>-->
+                </ul>
+            </div>
             <#if user??>
                 <ul  class="nav justify-content-end navbar-nav">
                     <li class="nav-item">
