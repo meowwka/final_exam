@@ -17,6 +17,15 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <#list images as im>
+            <div class="col-sm-2">
+                <div class="card" style="width: 11rem;">
+            <img src="/images/${im.imageName}" class="card-img-top" alt="${im.place.name}" style="height: 13rem;width: 11rem">
+            </div>
+            </div>
+        </#list>
+    </div>
     <div>
         <h4>Rating:</h4>
     </div>
@@ -32,13 +41,16 @@
                 <h5 class="card-title">${review.comment}</h5>
                 <p class="card-text">${review.value}</p>
 <#--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
+
+
+
             </div>
         </div>
         </#list>
     </div>
     <hr>
     <div >
-        <form action="/post_review" class="border-dark" method="post">
+        <form action="/post_review" class="border-dark" method="post" enctype="multipart/form-data">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
@@ -57,9 +69,22 @@
                     <option>5</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="fileEx">Example file input</label>
+                <input type="file" name="file" class="form-control-file" id="fileEx">
+            </div>
             <button class="btn btn-outline-info" type="submit">Upload</button>
 
         </form>
+
+<#--        <form action="/upload_new_photo" method="post" enctype="multipart/form-data">-->
+<#--            <#if _csrf??>-->
+<#--                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>-->
+<#--            </#if>-->
+<#--            <input type="hidden" name="placeId" value="${place.id}"/>-->
+
+<#--            <button classtype="submit">Submit</button>-->
+<#--        </form>-->
     </div>
 <#--    <#include "partials/pagination.ftlh">-->
 

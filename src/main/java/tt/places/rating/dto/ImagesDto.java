@@ -14,7 +14,6 @@ public class ImagesDto {
     private int id;
     private String name;
     private String image;
-//    private FoodTypeDTO type;
     private float price;
 
     public static ImagesDto from(Images images) {

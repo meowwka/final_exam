@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "images")
 @Builder
+@Setter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
 public class Images {

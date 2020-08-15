@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tt.places.rating.dto.ImagesDto;
 import tt.places.rating.dto.PlaceDTO;
-import tt.places.rating.service.FoodService;
+import tt.places.rating.service.ImageService;
 import tt.places.rating.service.PlaceService;
 
 import javax.validation.constraints.Min;
@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 class PlaceRestController {
     private final PlaceService placeService;
-    private final FoodService foodService;
+    private final ImageService imageService;
 
     @GetMapping
     public List<PlaceDTO> getPlaces(Pageable pageable) {
@@ -34,6 +34,6 @@ class PlaceRestController {
 
     @GetMapping("/{id:\\d+}/foods")
     public List<ImagesDto> getFoods(@PathVariable @Min(5) int id, Pageable pageable) {
-        return foodService.getFoods(id, pageable).getContent();
+        return imageService.getImages(id, pageable).getContent();
     }
 }

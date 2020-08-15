@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReviewsRepo extends JpaRepository<Reviews,Integer> {
     List<Reviews> findAllByPlace_Id(int id);
     boolean existsByUser_Id(int id);
+    List<Reviews> findAllById(int id);
 }

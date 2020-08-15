@@ -19,7 +19,7 @@
         <div class="col-sm-3">
 
 
-        <div class="card bg-light border-dark mb-3" style="width: 15rem;height: 42rem">
+        <div class="card bg-light border-dark mb-3" style="width: 15rem;height: 35rem">
                     <a class="text-dark" href="/places/${listItem.id}">
                         <img src="/images/${listItem.imagePath}" class="card-img-top images-icon" alt="..." style=" height:21rem;width: 15rem">
 
@@ -30,10 +30,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Cras justo odio</li>
                         </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
-                        </div>
+
                     </a>
                 </div>
         </div>
@@ -42,13 +39,7 @@
     </#list>
     </div>
 
-<#--    </div>-->
 
-<#--
-здесь мы подставляем содержимое другого "частичного" шаблона
-который отвечает за отображение элементов для постраничного просмотра данных
-https://freemarker.apache.org/docs/ref_directive_include.html
- -->
     <#include "partials/pagination.ftlh">
 
 </@main.renderWith>
