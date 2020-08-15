@@ -26,6 +26,6 @@ public class PlaceDTO {
         if (!place.getImage().isBlank()) {
             return place.getImage();
         }
-        return String.format("/images/store%d.png", Math.abs(place.getName().hashCode() % 4));
+        return String.format("store%d.png", Math.abs(place.getName().hashCode() % 4));
     }
 }

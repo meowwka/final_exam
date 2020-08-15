@@ -17,7 +17,7 @@ public class FoodDTO {
 //    private FoodTypeDTO type;
     private float price;
 
-    static FoodDTO from(Food food) {
+    public static FoodDTO from(Food food) {
         return builder()
                 .id(food.getId())
                 .name(food.getName())

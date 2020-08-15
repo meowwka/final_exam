@@ -8,24 +8,19 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+<#--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
         <title> ${title}title</title>
-        <link rel="stylesheet" href="/css/styles.css">
+<#--        <link rel="stylesheet" href="/css/styles.css">-->
+        <link rel="stylesheet" href="/css/main.css">
         <#list styles as styleSource>
             <link rel="stylesheet" href="${styleSource}">
         </#list>
     </head>
     <body>
 
-    <#--
-    например если бы у нашего сайта было какое-то верхнее меню,
-    то мы могли бы его тут указать
-    и оно появится сразу на всех страницах которые используют
-    этот шаблон
-    -->
 
     <header class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -37,34 +32,34 @@
                             <a class="nav-link" href="/successful"> profile</a>
                         </li>
                     <#else>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">login</a>
-                        </li>
+                    <p>logout</p>
                     </#if>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">cart</a>
-                    </li>
                 </ul>
         </nav>
-            <div>
-                <form action="" method="get">
-                    <div  class="input-group">
-                        <label for="lang_select" style="margin-top: 8px; margin-right: 15px;margin-left: -30px;">
-                            label.language: </label>
-                        <select class="custom-select" name="lang" id="lang_select">
-                            <option value="">Default</option>
-                            <option value="" disabled>----------</option>
-                            <option value="en_US">English</option>
-                            <option value="ru_RU">Русский</option>
-                        </select>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-info" type="submit">
-                            button.language-change.text
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <#if user??>
+                <ul  class="nav justify-content-end navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <form  action="/logout" method="post">
+                            <#if _csrf??>
+                                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
+                            </#if>
+                            <button class=" btn btn-light" > Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            <#else>
+                <ul  class="nav justify-content-end navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registration">Registration</a>
+                    </li>
+                </ul>
+            </#if>
         </div>
     </header>
 

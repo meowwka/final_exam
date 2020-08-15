@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tt.places.rating.model.UserRegisterForm;
+import tt.places.rating.service.FoodService;
 import tt.places.rating.service.PlaceService;
 import tt.places.rating.service.PropertiesService;
 import tt.places.rating.service.UserService;
@@ -25,6 +27,7 @@ public class MainController {
     private final UserService userService;
     private final PlaceService placeService;
     private final PropertiesService propertiesService;
+    private final FoodService foodService;
 
 
     private static <T> void constructPageable(Page<T> list, int pageSize, Model model, String uri) {
@@ -36,7 +39,7 @@ public class MainController {
         }
         model.addAttribute("hasNext", list.hasNext());
         model.addAttribute("hasPrev", list.hasPrevious());
-        model.addAttribute("products", list.getContent());
+        model.addAttribute("items", list.getContent());
         model.addAttribute("defaultPageSize", pageSize);
     }
 
@@ -85,7 +88,23 @@ public class MainController {
         var uri = uriBuilder.getRequestURI();
         constructPageable(places, propertiesService.getDefaultPageSize(), model, uri);
 
-        return "index";
+        return "main";
     }
 
+    @GetMapping("/places/{id:\\d+?}")
+    public String placePage(@PathVariable int id, Model model, Pageable pageable, HttpServletRequest uriBuilder) {
+        model.addAttribute("place", placeService.getPlace(id));
+        var uri = uriBuilder.getRequestURI();
+        var foods = foodService.getFoods(id, pageable);
+        constructPageable(foods, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "place";
+    }
+
+    @GetMapping("/add_place")
+    public String addPlace(){
+
+
+        return "";
+    }
 }

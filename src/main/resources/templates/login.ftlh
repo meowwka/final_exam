@@ -22,7 +22,6 @@
                 <div>
                     <button type="submit" class="btn btn-outline-info btn-block"> sign-in</button>
                     <a href="/registration"  class="btn btn-outline-info btn-block"> registration</a>
-                    <a class="text-info" href="/forgot-password">forgot-password</a>
 
                 </div>
             </form>
