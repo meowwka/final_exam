@@ -11,6 +11,6 @@
 - spring-boot-starter-web
 - spring-boot-starter-security
 
-
-- Для запуса проекта создайте в MySQL таблицу rating.
-- затем в application.properties введите логин\пароль
+# Для запуса проекта вам нужно:
+- создать в MySQL таблицу "rating".
+- затем в application.properties ввести логин\пароль
