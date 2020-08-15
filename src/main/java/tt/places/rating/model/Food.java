@@ -4,15 +4,17 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Data
 @Entity
-@Table(name="places")
+@Table(name = "foods")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
-public class Place {
+public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,11 +25,17 @@ public class Place {
     private String name;
 
     @NotBlank
-    @Size(max = 128)
-    @Column(length = 128)
-    private String address;
-
-    @NotBlank
     @Size(min = 1, max = 128)
+    @Column(length = 128)
     private String image;
+
+//    @ManyToOne
+//    @NotNull
+//    private FoodType foodType;
+
+    @Positive
+    private float price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Place place;
 }
