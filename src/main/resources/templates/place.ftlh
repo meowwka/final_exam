@@ -23,27 +23,44 @@
     <hr>
     <div>
         <h4>Reviews:</h4>
-        <div class="card border-light">
+        <#list review as review>
+        <div class="card border-dark mb-3 mt-3">
             <div class="card-header">
-                Featured
+                ${review.user.name} - ${review.user.email}
             </div>
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 class="card-title">${review.comment}</h5>
+                <p class="card-text">${review.value}</p>
 <#--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
             </div>
         </div>
+        </#list>
     </div>
     <hr>
-    <div>
-        <form action="">
+    <div >
+        <form action="/post_review" class="border-dark" method="post">
+            <#if _csrf??>
+                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
+            </#if>
+            <input type="hidden" name="placeId" value="${place.id}">
+            <div class="form-group">
+                <label for="reviewText">Add review:</label>
+                <textarea class="form-control border-dark" name="comment" id="reviewText" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Example select</label>
+                <select class="form-control border-dark" name="value" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <button class="btn btn-outline-info" type="submit">Upload</button>
 
         </form>
     </div>
 <#--    <#include "partials/pagination.ftlh">-->
-
-    <div>
-        <a href="/">Back to home page</a>
-    </div>
 
 </@main.renderWith>

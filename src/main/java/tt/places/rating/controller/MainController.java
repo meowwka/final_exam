@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tt.places.rating.model.Place;
+import tt.places.rating.model.Reviews;
 import tt.places.rating.model.User;
 import tt.places.rating.model.UserRegisterForm;
 import tt.places.rating.repo.PlaceRepository;
+import tt.places.rating.repo.ReviewsRepo;
 import tt.places.rating.repo.UserRepo;
 import tt.places.rating.service.FoodService;
 import tt.places.rating.service.PlaceService;
@@ -43,6 +45,7 @@ public class MainController {
     private final PropertiesService propertiesService;
     private final FoodService foodService;
     private final PlaceRepository placeRepository;
+    private final ReviewsRepo reviewsRepo;
     private final UserRepo userRepo;
 
 
@@ -125,14 +128,37 @@ public class MainController {
     }
 
     @GetMapping("/places/{id:\\d+?}")
-    public String placePage(@PathVariable int id, Model model, Pageable pageable, HttpServletRequest uriBuilder) {
-        model.addAttribute("place", placeService.getPlace(id));
+    public String placePage(@PathVariable int id, Model model, Pageable pageable,
+                            HttpServletRequest uriBuilder) {
+        var place = placeService.getPlace(id);
+        model.addAttribute("place", place);
         var uri = uriBuilder.getRequestURI();
         var foods = foodService.getFoods(id, pageable);
         constructPageable(foods, propertiesService.getDefaultPageSize(), model, uri);
         var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
         model.addAttribute("user", user);
+        var review = reviewsRepo.findAllByPlace_Id(place.getId());
+        model.addAttribute("review",review);
         return "place";
+    }
+
+
+    @PostMapping("/post_review")
+    public String postReview(Model model,@RequestParam String comment,
+                             @RequestParam int value,@RequestParam int placeId,Principal principal){
+        var place = placeRepository.findById(placeId);
+        var user = userRepo.findByEmail(principal.getName());
+        if (reviewsRepo.existsByUser_Id(user.get().getId())){
+
+        }else {
+            Reviews r = new Reviews();
+            r.setComment(comment);
+            r.setValue(value);
+            r.setPlace(place.get());
+            r.setUser(user.get());
+            reviewsRepo.save(r);
+        }
+        return "redirect:/places/"+placeId;
     }
 
     @GetMapping("/add_place")
@@ -186,4 +212,5 @@ public class MainController {
         }
         return null;
     }
+
 }
