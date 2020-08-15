@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Table(name="places")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,16 @@ public class Place {
     @NotBlank
     @Size(max = 128)
     @Column(length = 128)
-    private String address;
+    private String description;
 
     @NotBlank
     @Size(min = 1, max = 128)
     private String image;
+    public Place(String name, String description,String image){
+        this.image=name;
+        this.description=description;
+        this.image=image;
+
+
+    }
 }

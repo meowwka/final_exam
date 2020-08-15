@@ -39,7 +39,7 @@
             <#if user??>
                 <ul  class="nav justify-content-end navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
+                        <a class="nav-link" href="/add_place">Add Place</a>
                     </li>
                     <li class="nav-item">
                         <form  action="/logout" method="post">

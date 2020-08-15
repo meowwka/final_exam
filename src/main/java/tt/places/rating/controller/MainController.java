@@ -3,15 +3,20 @@ package tt.places.rating.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import tt.places.rating.model.Place;
+import tt.places.rating.model.User;
 import tt.places.rating.model.UserRegisterForm;
+import tt.places.rating.repo.PlaceRepository;
+import tt.places.rating.repo.UserRepo;
 import tt.places.rating.service.FoodService;
 import tt.places.rating.service.PlaceService;
 import tt.places.rating.service.PropertiesService;
@@ -19,6 +24,9 @@ import tt.places.rating.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.*;
+
+import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
 
 @Controller
 @RequestMapping
@@ -28,6 +36,8 @@ public class MainController {
     private final PlaceService placeService;
     private final PropertiesService propertiesService;
     private final FoodService foodService;
+    private final PlaceRepository placeRepository;
+    private final UserRepo userRepo;
 
 
     private static <T> void constructPageable(Page<T> list, int pageSize, Model model, String uri) {
@@ -103,8 +113,53 @@ public class MainController {
 
     @GetMapping("/add_place")
     public String addPlace(){
+        return "addPlace";
+    }
 
+    @GetMapping("/files/{name}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@PathVariable("name") String name) {
+        String path = "src/main/resources/static/images";
 
-        return "";
+        final MediaType mediaType = name.toLowerCase().contains(".png") ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
+        try {
+            InputStream is = new FileInputStream(new File(path) + "/" + name);
+            return ResponseEntity
+                    .ok()
+                    .contentType(mediaType)
+                    .body(StreamUtils.copyToByteArray(is));
+        } catch (Exception e) {
+            InputStream is = null;
+            try {
+                is = new FileInputStream(new File(path) + "/" + name);
+                return ResponseEntity
+                        .ok()
+                        .contentType(mediaType)
+                        .body(StreamUtils.copyToByteArray(is));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @RequestMapping(value = "/add_place", method = RequestMethod.POST, consumes=MULTIPART_FORM_DATA)
+    public final String addPost(@RequestParam String title,
+                                @RequestParam String description,
+                                @RequestParam("file") MultipartFile image) throws IOException {
+        File imageFile = new File("src/main/resources/static/images"+ image.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(imageFile);
+        fos.write(image.getBytes());
+        fos.close();
+
+//        User user = new User("some user", "pass123");
+//        user.setId(user_id);
+//        userRepo.save(user);
+
+        Place p = new Place(title,description, "src/main/resources/static/images"+ image.getOriginalFilename());
+        placeRepository.save(p);
+
+        System.out.println("done");
+        return "success";
     }
 }

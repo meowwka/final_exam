@@ -2,7 +2,7 @@ use `rating`;
 CREATE TABLE `places` (
     `id` INT auto_increment NOT NULL,
     `name` varchar(128) NOT NULL,
-    `address` varchar(128) NOT NULL,
+    `description` varchar(128) NOT NULL,
     `image` varchar(128) NOT NULL, PRIMARY KEY (`id`)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE `users`
 );
 
 
-insert into `places` (`name`, `address`, `image`)
+insert into `places` (`name`, `description`, `image`)
 values ('That Bar', '', 'store1.jpg'),
        ('Juju bar and grill', '', 'photo1.jpg'),
        ('The Rocinante', '', 'photo1.jpg'),
