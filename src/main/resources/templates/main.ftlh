@@ -20,16 +20,15 @@
 
 
         <div class="card bg-light border-dark mb-3" style="width: 15rem;height: 42rem">
-                    <img src="/images/${listItem.imagePath}" class="card-img-top images-icon" alt="..." style=" height:21rem;width: 15rem">
                     <a class="text-dark" href="/places/${listItem.id}">
+                        <img src="/images/${listItem.imagePath}" class="card-img-top images-icon" alt="..." style=" height:21rem;width: 15rem">
+
                         <div class="card-body">
                             <h5 class="card-title">${listItem.name}</h5>
                             <p class="card-text">${listItem.description}</p>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
                         </ul>
                         <div class="card-body">
                             <a href="#" class="card-link">Card link</a>
