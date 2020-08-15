@@ -3,7 +3,7 @@
 <@main.renderWith title="Places">
 
     <h1>${place.name}</h1>
-    <img src="${place.imagePath}" alt="Photo of place front" width="300">
+    <img src="/images/${place.imagePath}" alt="Photo of place front" width="300">
 
     <h2>Our today menu!</h2>
     <div class="flex flex-wrap" id="itemList">

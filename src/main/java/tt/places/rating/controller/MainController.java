@@ -115,10 +115,12 @@ public class MainController {
     @GetMapping("/search/{search}")
     public String search(@PathVariable("search") String search, Principal principal, Model model, Pageable pageable,HttpServletRequest uriBiulder){
         var places = placeService.searchPlace(search, pageable);
-        var uri = uriBiulder.getRequestURI();
-        constructPageable(places, propertiesService.getDefaultPageSize(), model, uri);
-        var user = userService.getByEmail(uriBiulder.getUserPrincipal().getName());
-        model.addAttribute("user", user);
+        var uriB = uriBiulder.getRequestURI();
+        constructPageable(places, propertiesService.getDefaultPageSize(), model, uriB);
+        if(uriBiulder.getUserPrincipal() != null) {
+            var user = userService.getByEmail(uriBiulder.getUserPrincipal().getName());
+            model.addAttribute("user", user);
+        }
         return "main";
     }
 
@@ -137,7 +139,8 @@ public class MainController {
     public String addPlace(Model model, HttpServletRequest uriBuilder){
 
         var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
-        model.addAttribute("user", user);return "addPlace";
+        model.addAttribute("user", user);
+        return "addPlace";
     }
 
 
