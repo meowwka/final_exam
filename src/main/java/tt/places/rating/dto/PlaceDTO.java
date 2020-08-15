@@ -12,13 +12,15 @@ import tt.places.rating.model.Place;
 public class PlaceDTO {
     private Integer id;
     private String name;
+    private String description;
     private String imagePath;
 
     public static PlaceDTO from(Place place) {
         return builder()
                 .id(place.getId())
                 .name(place.getName())
-                .imagePath(calcStoreImagePath(place))
+                .description(place.getDescription())
+                .imagePath(place.getImage())
                 .build();
     }
 

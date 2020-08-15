@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import tt.places.rating.dto.FoodDTO;
+import tt.places.rating.dto.ImagesDto;
 import tt.places.rating.repo.FoodRepository;
 
 @Service
@@ -13,8 +13,8 @@ import tt.places.rating.repo.FoodRepository;
 public class FoodService {
     private final FoodRepository foodRepository;
 
-    public Page<FoodDTO> getFoods(int id, Pageable pageable) {
+    public Page<ImagesDto> getFoods(int id, Pageable pageable) {
         return foodRepository.findAllByPlaceId(id, pageable)
-                .map(FoodDTO::from);
+                .map(ImagesDto::from);
     }
 }

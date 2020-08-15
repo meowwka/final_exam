@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tt.places.rating.dto.FoodDTO;
+import tt.places.rating.dto.ImagesDto;
 import tt.places.rating.dto.PlaceDTO;
 import tt.places.rating.service.FoodService;
 import tt.places.rating.service.PlaceService;
@@ -33,7 +33,7 @@ class PlaceRestController {
     }
 
     @GetMapping("/{id:\\d+}/foods")
-    public List<FoodDTO> getFoods(@PathVariable @Min(5) int id, Pageable pageable) {
+    public List<ImagesDto> getFoods(@PathVariable @Min(5) int id, Pageable pageable) {
         return foodService.getFoods(id, pageable).getContent();
     }
 }

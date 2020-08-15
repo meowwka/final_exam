@@ -22,9 +22,9 @@
     <body>
 
 
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/">main</a>
                 <ul id="ulist" class="navbar-nav">
                     <#if user??>
@@ -66,11 +66,6 @@
 
 
     <div class="container ">
-        <#--
-         элемент nested указывает что в этом место
-         будет подставлено некоторое содержимое,
-         которое передаётся как тело макро-функции при её вызове
-        -->
         <#nested>
 
     </div>

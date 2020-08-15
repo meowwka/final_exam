@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
-public class Food {
+public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

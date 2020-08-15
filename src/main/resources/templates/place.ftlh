@@ -9,7 +9,7 @@
     <div class="flex flex-wrap" id="itemList">
         <#list items as listItem>
             <div class="flex flex-column box flex-v-center">
-                <img class="food-icon" src="/images/${listItem.type.icon}" alt="${listItem.type.name}">
+                <img class="images-icon" src="/images/${listItem.type.icon}" alt="${listItem.type.name}">
                 <a href="/foods/${listItem.id}">${listItem.name}</a>
             </div>
         </#list>

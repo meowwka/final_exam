@@ -102,7 +102,12 @@ public class MainController {
         var places = placeService.getPlaces(pageable);
         var uri = uriBuilder.getRequestURI();
         constructPageable(places, propertiesService.getDefaultPageSize(), model, uri);
-
+        if(uriBuilder.getUserPrincipal() != null) {
+            var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
+            model.addAttribute("user", user);
+        }
+//        var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
+//        model.addAttribute("user", user);
         return "main";
     }
 
@@ -112,13 +117,16 @@ public class MainController {
         var uri = uriBuilder.getRequestURI();
         var foods = foodService.getFoods(id, pageable);
         constructPageable(foods, propertiesService.getDefaultPageSize(), model, uri);
-
+        var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
+        model.addAttribute("user", user);
         return "place";
     }
 
     @GetMapping("/add_place")
-    public String addPlace(){
-        return "addPlace";
+    public String addPlace(Model model, HttpServletRequest uriBuilder){
+
+        var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
+        model.addAttribute("user", user);return "addPlace";
     }
 
 
@@ -129,20 +137,8 @@ public class MainController {
                                 @RequestParam("file") MultipartFile image) throws IOException {
         File imageFile = new File("src\\main\\resources\\static\\images\\"+ image.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(imageFile);
-//        BufferedImage imagec = ImageIO.read(imageFile);
-//        ImageIO.write();
-//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fos);
-        fos.write(image.getBytes());
-//        fos.write();
-
-
-//        User user = new User("some user", "pass123");
-//        user.setId(user_id);
-//        userRepo.save(user);
-
         Place p = new Place(title,description,  image.getOriginalFilename());
         placeRepository.save(p);
-//        objectOutputStream.writeObject(p);
         fos.close();
 
         System.out.println("done");

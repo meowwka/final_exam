@@ -1,7 +1,7 @@
 package tt.places.rating.dto;
 
 import lombok.*;
-import tt.places.rating.model.Food;
+import tt.places.rating.model.Images;
 
 @Getter
 @Setter
@@ -9,7 +9,7 @@ import tt.places.rating.model.Food;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FoodDTO {
+public class ImagesDto {
 
     private int id;
     private String name;
@@ -17,13 +17,13 @@ public class FoodDTO {
 //    private FoodTypeDTO type;
     private float price;
 
-    public static FoodDTO from(Food food) {
+    public static ImagesDto from(Images images) {
         return builder()
-                .id(food.getId())
-                .name(food.getName())
+                .id(images.getId())
+                .name(images.getName())
 //                .type(FoodTypeDTO.from(food.getFoodType()))
-                .image(food.getImage())
-                .price(food.getPrice())
+                .image(images.getImage())
+                .price(images.getPrice())
                 .build();
     }
 //
