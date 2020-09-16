@@ -45,7 +45,8 @@
 
     </form>
     <div>
-        <h4>Rating:</h4>
+        <h4>Rating:
+                ${middle!'0'}
     </div>
     <hr>
     <div>

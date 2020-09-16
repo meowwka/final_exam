@@ -18,7 +18,7 @@ public class Reviews {
     @Column
     private String comment;
 
-    @NonNull
+//    @NonNull
     @Column
     private int value;
 
