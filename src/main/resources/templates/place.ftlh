@@ -2,12 +2,11 @@
 
 <@main.renderWith title="Places">
 
-<#--    <h1>${place.name}</h1>-->
-<#--    <img src="/images/${place.imagePath}" alt="Photo of place front" width="300">-->
-    <div class="card  mb-3 mt-3 mx-auto" >
+    <div class="card  mb-3 mt-3 mx-auto">
         <div class="row no-gutters">
             <div class="col-md-4">
-                <img src="/images/${place.imagePath}" class="card-img" alt="${place.name}" style="width: 18rem;height: 23rem">
+                <img src="/images/${place.imagePath}" class="card-img" alt="${place.name}"
+                     style="width: 18rem;height: 23rem">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -21,11 +20,30 @@
         <#list images as im>
             <div class="col-sm-2">
                 <div class="card" style="width: 11rem;">
-            <img src="/images/${im.imageName}" class="card-img-top" alt="${im.place.name}" style="height: 13rem;width: 11rem">
-            </div>
+                    <img src="/images/${im.imageName}" class="card-img-top" alt="${im.place.name}"
+                         style="height: 13rem;width: 11rem">
+                </div>
             </div>
         </#list>
     </div>
+
+    <form action="/upload_new_photo" method="post" enctype="multipart/form-data">
+        <#if _csrf??>
+            <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
+        </#if>
+        <input type="hidden" name="placeId" value="${place.id}"/>
+
+        <div class="input-group mt-4 mb-4">
+            <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="inputGroupFile04">
+                <label class="custom-file-label" for="inputGroupFile04">Upload new photo</label>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-outline-info" type="submit" id="inputGroupFileAddon04">Submit</button>
+            </div>
+        </div>
+
+    </form>
     <div>
         <h4>Rating:</h4>
     </div>
@@ -33,23 +51,19 @@
     <div>
         <h4>Reviews:</h4>
         <#list review as review>
-        <div class="card border-dark mb-3 mt-3">
+            <div class="card border-dark mb-3 mt-3">
             <div class="card-header">
                 ${review.user.name} - ${review.user.email}
             </div>
             <div class="card-body">
                 <h5 class="card-title">${review.comment}</h5>
                 <p class="card-text">${review.value}</p>
-<#--                <a href="#" class="btn btn-primary">Go somewhere</a>-->
-
-
-
             </div>
-        </div>
+            </div>
         </#list>
     </div>
     <hr>
-    <div >
+    <div>
         <form action="/post_review" class="border-dark" method="post" enctype="multipart/form-data">
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
@@ -69,23 +83,10 @@
                     <option>5</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="fileEx">Example file input</label>
-                <input type="file" name="file" class="form-control-file" id="fileEx">
-            </div>
             <button class="btn btn-outline-info" type="submit">Upload</button>
 
         </form>
-
-<#--        <form action="/upload_new_photo" method="post" enctype="multipart/form-data">-->
-<#--            <#if _csrf??>-->
-<#--                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>-->
-<#--            </#if>-->
-<#--            <input type="hidden" name="placeId" value="${place.id}"/>-->
-
-<#--            <button classtype="submit">Submit</button>-->
-<#--        </form>-->
+        <hr>
     </div>
-<#--    <#include "partials/pagination.ftlh">-->
 
 </@main.renderWith>
