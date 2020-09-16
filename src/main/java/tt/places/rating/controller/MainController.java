@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import tt.places.rating.dto.PlaceDTO;
+import tt.places.rating.dto.ReviewDto;
 import tt.places.rating.model.Images;
 import tt.places.rating.model.Place;
 import tt.places.rating.model.Reviews;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.*;
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
 
@@ -137,6 +140,14 @@ public class MainController {
         model.addAttribute("review",review);
         var images = imagesRepository.findAllByPlaceId(place.getId());
         model.addAttribute("images",images);
+        var placeRev = PlaceDTO.from(placeRepository.findById(id).get());
+        var rev =reviewsRepo.findAllByPlace_Id(placeRev.getId()).stream().map(ReviewDto::from).collect(Collectors.toList());
+        int result = 0;
+        for(Reviews reviews : reviewsRepo.findAllByPlace_Id(placeRev.getId())){
+            result+=reviews.getValue();
+        }
+        var middle = result/rev.size();
+        model.addAttribute("middle", middle);
 
         return "place";
     }
