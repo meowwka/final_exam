@@ -141,12 +141,29 @@ public class MainController {
         return "place";
     }
 
-
-    @RequestMapping(value = "/post_review", method = RequestMethod.POST,
+    @RequestMapping(value = "/upload_new_photo", method = RequestMethod.POST,
             consumes = MULTIPART_FORM_DATA)
+    public String uploadPhoto(@RequestParam("file") MultipartFile image,
+                              @RequestParam int placeId) throws IOException {
+        File imageFile = new File("src/main/resources/static/images/"+ image.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(imageFile);
+        var place_id = placeRepository.findById(placeId);
+        var images = new Images();
+        images.setImageName(image.getOriginalFilename());
+        images.setPlace(place_id.get());
+        imagesRepository.save(images);
+        fos.close();
+
+        return "redirect:/places/"+placeId;
+
+    }
+
+    @RequestMapping(value = "/post_review", method = RequestMethod.POST
+//            consumes = MULTIPART_FORM_DATA
+    )
     public String postReview(Model model,@RequestParam String comment,
                              @RequestParam int value,@RequestParam int placeId,
-                             @RequestParam("file") MultipartFile image,Principal principal) throws IOException{
+                             Principal principal){
         var place = placeRepository.findById(placeId);
         var user = userRepo.findByEmail(principal.getName());
             Reviews r = new Reviews();
@@ -155,14 +172,7 @@ public class MainController {
             r.setPlace(place.get());
             r.setUser(user.get());
             reviewsRepo.save(r);
-        File imageFile = new File("src\\main\\resources\\static\\images\\"+ image.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(imageFile);
-        var place_id = placeRepository.findById(placeId);
-        var images = new Images();
-        images.setImageName(image.getOriginalFilename());
-        images.setPlace(place_id.get());
-        imagesRepository.save(images);
-        fos.close();
+
         return "redirect:/places/"+placeId;
     }
 
@@ -182,7 +192,7 @@ public class MainController {
     public String addPost(@RequestParam String title,
                                 @RequestParam String description,
                                 @RequestParam("file") MultipartFile image) throws IOException {
-        File imageFile = new File("src\\main\\resources\\static\\images\\"+ image.getOriginalFilename());
+        File imageFile = new File("src/main/resources/static/images/"+ image.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(imageFile);
         Place p = new Place(title,description,  image.getOriginalFilename());
         placeRepository.save(p);
@@ -196,11 +206,11 @@ public class MainController {
     @GetMapping("/files/{name}")
     @ResponseBody
     public ResponseEntity<byte[]> getImage(@PathVariable("name") String name) {
-        String path = "src\\main\\resources\\static\\images\\";
+        String path = "src/main/resources/static/images";
 
         final MediaType mediaType = name.toLowerCase().contains(".png") ? MediaType.IMAGE_PNG : MediaType.IMAGE_JPEG;
         try {
-            InputStream is = new FileInputStream(new File(path) + "\\" + name);
+            InputStream is = new FileInputStream(new File(path) + "/" + name);
             return ResponseEntity
                     .ok()
                     .contentType(mediaType)
@@ -208,7 +218,7 @@ public class MainController {
         } catch (Exception e) {
             InputStream is = null;
             try {
-                is = new FileInputStream(new File(path) + "\\" + name);
+                is = new FileInputStream(new File(path) + "/" + name);
                 return ResponseEntity
                         .ok()
                         .contentType(mediaType)
